@@ -22,8 +22,9 @@ router.get('/mycourses', authenticatetoken,async (req,res)=>{
     
 });
 
-router.post('/addcourses',authenticatetoken,upload.single('image'),async (req,res)=>{
+router.post('/addcourses',upload.single('document'),async (req,res)=>{
 
+    
     console.log(req.file);
     console.log(req.user);
     const payload ={

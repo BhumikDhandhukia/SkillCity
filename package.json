@@ -8,7 +8,7 @@
     "frontend":"cd frontend && npm start",
     "backend" : "cd Backend && nodemon server" ,
     "project": "concurrently \"npm run frontend \" \"npm run backend\"",
-    "installnodemodules":"concurrently \"cd frontend and npm i \" \"cd Backend && npm i\""
+    "installpackages":"concurrently \"cd frontend && npm i \" \"cd Backend && npm i\""
   },
   "repository": {
     "type": "git",

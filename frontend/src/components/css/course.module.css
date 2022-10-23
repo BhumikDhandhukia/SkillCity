@@ -1,0 +1,67 @@
+
+.add_background_screen{
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    height: fit-content;
+    
+
+    background-image: url(../../images/Course.jpg);
+
+
+    
+    background-blend-mode: darken;
+    background-size: cover;
+    background-repeat: no-repeat;    
+    
+  
+   
+    display: flex;
+    align-items:baseline;
+    justify-content: center;
+    
+   
+    padding-top: 10px;
+
+    padding-bottom: 70px;
+    color: #fff;
+    }
+
+.add_black_box
+
+    {
+    
+    margin-top: 0px;
+    width: 40%;
+    height: 100%;
+    padding: 2rem;
+    background: rgb(255, 255, 255);
+    background-color: rgba(0, 0,0,0.5);
+    /* margin-right: 900px; */
+    margin:auto
+}
+
+.title{
+    padding-bottom: 10px;
+    font-size:xx-large;
+    color:   coral;
+    text-align: center;
+}
+
+.partition{
+ 
+    padding: 2rem;
+    display:flex;
+    justify-content:space-evenly;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.preview{
+    
+    padding-left: 2rem;
+   
+    width: 50%;
+    
+}
+
