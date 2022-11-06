@@ -1,12 +1,38 @@
-import React, {useState} from 'react'
+import React, {useState,useEffect, useMemo} from 'react'
 import CSS from './css/course.module.css'
 import Preview from './Preview';
 import axios from 'axios';
 
 const AddCourse = () => {
+const holdingVariable=0
+
+
+
+useEffect(()=>{
+
+   const fullname =  axios.get('./courses/getusername', { withCredentials: true }).then(resp=>{
+      console.log(resp)
+       setFullname(resp.data.data)
+   }).catch(err=>{console.log(err)});
+
+
+   
+   
+}, [holdingVariable]);
+
+
+
+
+     const [fullname,setFullname]=useState();
+
+
+
+
     const [course , setCourse ] = useState({
-        title : "" ,  catagory:"" , description : "" , communication : '' , region : '' , pincode : '' , document : null
+        title : "" ,  catagory:"" , description : "" , communication : '' , region : '' , pincode : '' , document : null , image : null , 
       });
+
+      const[preview,setPreview]=useState()
 
 
 
@@ -14,30 +40,50 @@ const SendCourseDetails=async (e)=>{
 
   e.preventDefault();
   console.log('Uploading course Details');
-  const { title, catagory , description ,communication ,region ,pincode , document } = course;
-  const payload={
-    title,
-    catagory,
-    description,
-    communication,
-    region,
-    pincode,
-    document
-  }
+  const { title, catagory , description ,communication ,region ,pincode , document, image} = course;
+  
+  const fd = new FormData();
+  fd.append('title',title)
+  fd.append('catagory',catagory)
+  fd.append('description',description)
+  fd.append('communication',communication)
+  fd.append('region',region)
+  fd.append('pincode',pincode)
+  fd.append('document',document)
+  fd.append('image',image)
 
-  await axios.post('./courses/addcourses',payload);
+  console.log(fd)
+  await axios.post('./courses/addcourses',fd).then(resp=>{
+    alert(resp.data.data).catch(err=>{
+      alert(err.data)
+    });
+  }) ;
 
 
     
 };
 
 
-const handleDocument =(e)=>{
 
-  console.log(e.target.files[0]);
-  name = e.target.name;
-  value = e.target.files[0];
-  setCourse({...course, [name]: value});
+const imagePreview = async (e)=>{
+
+        const thumbnail = document.getElementById('thumbnail');
+        const uncroppedImage = e.target.files[0]
+        console.log(uncroppedImage)
+        if(uncroppedImage)
+        {
+          const reader = new FileReader()
+
+          
+          reader.onloadend = () => {
+           console.log(reader.result)
+
+            setPreview(reader.result)
+          }
+           reader.readAsDataURL(uncroppedImage);
+          
+        }
+
 
 
 
@@ -67,6 +113,15 @@ const handleInputs =(e)=>{
   if(name==='communication')
   {
         addressVisible();
+  }
+  if(name==='document'||name==='image')
+  {
+        value = e.target.files[0]
+  }
+  if(name==='image'){
+
+    imagePreview(e);
+    value=e.target.files[0]
   }
   
 
@@ -145,9 +200,19 @@ const handleInputs =(e)=>{
                             <div >
                               <p color='coral'>Choose a single pdf file proving your qualification to teach this course </p>
                                 <input type="file" id="document" size='100'  name ="document"  accept ='.pdf' className="form-control" autoFocus
-                                
-                                onChange = {handleDocument}
+                               
+                                onChange = {handleInputs}
                                 />
+                            </div>
+                            <div className='form-group'>
+                            <label for="Image" className="col-sm-3 control-label">Image</label>
+                            <div >
+                              <p color='coral'>Choose a single pdf file proving your qualification to teach this course </p>
+                                <input type="file" id="image" size='100'  name ="image"  accept ='image/*' className="form-control" autoFocus
+                                
+                                onChange = {handleInputs}
+                                />
+                            </div>
                             </div>
                         </div>
   
@@ -186,7 +251,7 @@ const handleInputs =(e)=>{
         
           <div className={CSS.add_black_box}>
           <h2 className={CSS.title}>Preview</h2>
-            <Preview title = 'THIS IS TITLE'/>
+            <Preview {...course} src={ preview} fullname={fullname}/>
           </div>
           
 

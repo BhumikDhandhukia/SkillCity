@@ -5,18 +5,23 @@ const Schema = mongoose.Schema;
 
 const CourseSchema = new Schema(
     {
-        CourseTitle : {type: Schema.Types.String, required : true},
-        Description : {type : String, required: true  },
-        Document: {data: Buffer, contentType:String },
+        title : {type: Schema.Types.String, required : true},
+        catagory : {type: Schema.Types.String, required : true},
+        description: {type : String, required: true  },
+        communication: {type: String, required: true},
+        region: {type: String },
+        pincode: {type: Number},
         owned: {type: String, required: true},
-        enrolledby: {type: Array},
+        ownername: {type: String, required: true},
+        enrolledby: [String],
         isPublished: {type: Boolean, required: true},
-        rating: {type: Array},
-        modeofteaching: {type: String, required: true},
-        Address: {type: String},
-        city: {type: String, required: true},
-        pincode: {type: Number, required: true}
+        coursestatus:{type:String,required:true},
+
         
+        
+    
+        
+    
 });
 
 const CreateCourse = mongoose.model('Courses',CourseSchema);

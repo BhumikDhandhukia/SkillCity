@@ -15,6 +15,7 @@ const RegisteruserSchema = new Schema(
         
         PhoneNo : {type:Number, required : false},
         Password : {type: String , required : true},
+        mycourses :[String],
         
         tokens :[
                 {

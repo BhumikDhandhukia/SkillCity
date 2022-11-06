@@ -1,6 +1,6 @@
 import React , {useState,useContext} from 'react'
 import axios from 'axios';
-import './css/login.css'
+import './css/Login.css'
 import { useNavigate} from 'react-router-dom';
 import { userContext } from '../App';
 import CheckLogin from './CheckLogin';
@@ -36,7 +36,7 @@ const Navigate = useNavigate();
               alert("Inalid Email or Password");
           }
   
-      });
+      }).catch(error=>{console.log(error)});
 
 
 
